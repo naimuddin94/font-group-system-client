@@ -181,7 +181,7 @@ export default function FontGroupForm() {
               initial={{ opacity: 0, y: -20 }}
               animate={{
                 opacity: removingIndex === index ? 0 : 1,
-                y: 0,
+                y: removingIndex === index ? -10 : 0,
                 transition: {
                   type: "spring",
                   stiffness: 500,
@@ -191,11 +191,12 @@ export default function FontGroupForm() {
               }}
               exit={{
                 opacity: 0,
-                height: 0,
-                marginBottom: 0,
+                y: -20,
                 transition: {
-                  duration: 0.3,
-                  height: { delay: 0.1 },
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 30,
+                  duration: 0.2,
                 },
               }}
               layout
