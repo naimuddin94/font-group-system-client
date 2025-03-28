@@ -1,10 +1,14 @@
-import FontGroupForm from "./components/FontGroupForm";
+import FontsTable from "./components/FontTable";
+import Navbar from "./components/Navbar";
+import TTFFileUploader from "./components/TTFFileUploader";
 
 function App() {
   return (
     <>
-      {/* <TTFFileUploader /> */}
-      <FontGroupForm />
+      <Navbar />
+      <TTFFileUploader />
+      <FontsTable />
+      {/* <FontGroupForm /> */}
     </>
   );
 }

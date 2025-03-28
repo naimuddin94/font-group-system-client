@@ -165,7 +165,7 @@ export default function FontGroupForm() {
           <Input
             placeholder="Group Title"
             {...register("groupTitle", { required: true })}
-            className="w-full border-gray-300"
+            className="w-full h-12 border-gray-300"
           />
           {errors.groupTitle && (
             <span className="text-red-500 text-sm">
