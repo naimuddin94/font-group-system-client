@@ -1,9 +1,10 @@
-import TTFFileUploader from "./components/TTFFileUploader";
+import FontGroupForm from "./components/FontGroupForm";
 
 function App() {
   return (
     <>
-      <TTFFileUploader />
+      {/* <TTFFileUploader /> */}
+      <FontGroupForm />
     </>
   );
 }
