@@ -60,8 +60,8 @@ const item = {
 
 export default function Footer() {
   return (
-    <Container>
-      <footer className="bg-background border-t">
+    <footer className="bg-background border-t">
+      <Container>
         <div className="container py-12 md:py-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
@@ -150,7 +150,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </footer>
-    </Container>
+      </Container>
+    </footer>
   );
 }

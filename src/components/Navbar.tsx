@@ -61,13 +61,13 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
   return (
-    <Container>
-      <motion.header
-        className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      >
+    <motion.header
+      className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
+      <Container>
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-6 md:gap-10">
             <Link to="/" className="flex items-center space-x-2">
@@ -209,7 +209,7 @@ export default function Navbar() {
             </Sheet>
           </div>
         </div>
-      </motion.header>
-    </Container>
+      </Container>
+    </motion.header>
   );
 }

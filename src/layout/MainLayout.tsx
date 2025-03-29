@@ -6,7 +6,7 @@ const MainLayout = () => {
   return (
     <>
       <Navbar />
-      <section className="py-10">
+      <section className="py-10 md:py-16">
         <Outlet />
       </section>
       <Footer />
