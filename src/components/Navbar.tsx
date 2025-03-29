@@ -20,23 +20,23 @@ const fontCategories = [
   {
     title: "Upload Font",
     href: "/",
-    description: "Clean, modern fonts without decorative elements",
+    description: "Easily upload and manage your custom fonts.",
   },
   {
     title: "Create Group",
     href: "/create-fonts-group",
-    description: "Classic fonts with decorative elements at the end of strokes",
+    description:
+      "Organize fonts into groups for better management and accessibility.",
   },
   {
     title: "Available Fonts",
     href: "/fonts",
-    description: "Eye-catching fonts designed for headlines and titles",
+    description: "Browse and select from a variety of available fonts.",
   },
   {
-    title: "Display Group List",
+    title: "Group List",
     href: "/group-list",
-    description:
-      "Fixed-width fonts where each character takes up the same space",
+    description: "View and manage all font groups in one place.",
   },
 ];
 

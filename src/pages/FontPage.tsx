@@ -1,3 +1,4 @@
+import Confirmation from "@/components/Confirmation";
 import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,6 +6,7 @@ import { baseUrl } from "@/constant";
 import { IFonts } from "@/types";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 // Function to dynamically load fonts from backend
 const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
@@ -48,6 +50,25 @@ export default function FontPage() {
   useEffect(() => {
     fonts.forEach((font) => loadFont(font.name, font.path, font.style));
   }, [fonts]);
+
+  const handleDeleteFont = async (id: string) => {
+    try {
+      const response = await fetch(`${baseUrl}/api/v1/fonts/${id}`, {
+        method: "DELETE",
+      });
+
+      const result = await response.json();
+
+      if (result?.success) {
+        toast.success(result.message);
+        setFonts(fonts.filter((font) => font._id !== id));
+      } else {
+        toast.success(result.message);
+      }
+    } catch {
+      toast.error("Something wrong deleting font from DB");
+    }
+  };
 
   return (
     <Container>
@@ -94,12 +115,16 @@ export default function FontPage() {
                       Example Style
                     </td>
                     <td className="p-2 text-right">
-                      <Button
-                        variant="ghost"
-                        className="text-red-500 hover:text-red-600"
+                      <Confirmation
+                        onConfirm={() => handleDeleteFont(font._id)}
                       >
-                        Delete
-                      </Button>
+                        <Button
+                          variant="ghost"
+                          className="text-red-500 hover:text-red-600"
+                        >
+                          Delete
+                        </Button>
+                      </Confirmation>
                     </td>
                   </motion.tr>
                 ))}
