@@ -1,3 +1,5 @@
+import Container from "@/components/Container";
+import Loading from "@/components/Loading";
 import { baseUrl } from "@/constant";
 import {
   useEffect,
@@ -8,10 +10,8 @@ import {
 } from "react";
 import { HiOutlineCloudUpload } from "react-icons/hi";
 import { toast } from "sonner";
-import Container from "./Container";
-import Loading from "./Loading";
 
-export default function TTFFileUploader() {
+export default function Home() {
   const [uploading, setUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -70,7 +70,7 @@ export default function TTFFileUploader() {
 
         const result = await response.json();
 
-        if (result?.status === 201) {
+        if (result?.statusCode === 201) {
           toast.success(result.message);
         } else {
           toast.success(result.message);

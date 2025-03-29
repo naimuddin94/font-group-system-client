@@ -1,10 +1,10 @@
+import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { baseUrl } from "@/constant";
 import { IFonts } from "@/types";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Container from "./Container";
 
 // Function to dynamically load fonts from backend
 const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
@@ -30,7 +30,7 @@ const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
     .catch((error) => console.error("❌ Font loading error:", error));
 };
 
-function FontsTable() {
+export default function FontPage() {
   const [fonts, setFonts] = useState<IFonts[]>([]);
 
   useEffect(() => {
@@ -111,5 +111,3 @@ function FontsTable() {
     </Container>
   );
 }
-
-export default FontsTable;
