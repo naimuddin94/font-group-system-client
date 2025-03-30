@@ -19,13 +19,10 @@ export default function Home() {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    if (
-      selectedFile &&
-      (selectedFile.name.endsWith(".ttf") || selectedFile.name.endsWith(".ttc"))
-    ) {
+    if (selectedFile && selectedFile.name.endsWith(".ttc")) {
       setFile(selectedFile);
     } else if (selectedFile) {
-      toast.error("Only TTF and TTC files are allowed");
+      toast.error("Only TTF files are allowed");
       e.target.value = "";
     }
   };
@@ -48,7 +45,7 @@ export default function Home() {
     if (droppedFile && droppedFile.name.endsWith(".ttf")) {
       setFile(droppedFile);
     } else if (droppedFile) {
-      alert("Only TTF files are allowed");
+      toast.error("Only TTF files are allowed");
     }
   };
 
@@ -108,7 +105,7 @@ export default function Home() {
             type="file"
             ref={fileInputRef}
             className="hidden"
-            accept=".ttf,.ttc"
+            accept=".ttf"
             onChange={handleFileChange}
           />
 
