@@ -20,7 +20,6 @@ const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
     `url(${fontUrl}) format("truetype")`,
     {
       style: fontStyle.toLowerCase(),
-      weight: "normal",
     }
   );
 
