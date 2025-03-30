@@ -10,7 +10,12 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 // Function to dynamically load fonts from backend
-const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
+const loadFont = (
+  fontName: string,
+  fontFile: string,
+  fontStyle: string,
+  weight: string | number
+) => {
   const fontPath = fontFile.replace(/\\/g, "/");
 
   const fontUrl = `${baseUrl}/${fontPath}`;
@@ -20,6 +25,7 @@ const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
     `url(${fontUrl}) format("truetype")`,
     {
       style: fontStyle.toLowerCase(),
+      weight: weight.toString(),
     }
   );
 
@@ -27,7 +33,6 @@ const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
     .load()
     .then((loadedFont) => {
       document.fonts.add(loadedFont);
-      console.log(`✅ Loaded font: ${fontName} - ${fontStyle}`);
     })
     .catch((error) => console.error("❌ Font loading error:", error));
 };
@@ -35,6 +40,7 @@ const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
 export default function FontPage() {
   const [fonts, setFonts] = useState<IFonts[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchFonts = async () => {
@@ -50,7 +56,11 @@ export default function FontPage() {
   }, []);
 
   useEffect(() => {
-    fonts.forEach((font) => loadFont(font.name, font.path, font.style));
+    Promise.all(
+      fonts.map((font) =>
+        loadFont(font.name, font.path, font.style, font.weight)
+      )
+    ).then(() => setFontsLoaded(true));
   }, [fonts]);
 
   const handleDeleteFont = async (id: string) => {
@@ -71,6 +81,8 @@ export default function FontPage() {
       toast.error("Something wrong deleting font from DB");
     }
   };
+
+  if (!fontsLoaded) return <Loading />;
 
   return (
     <>
@@ -114,7 +126,9 @@ export default function FontPage() {
                       <td className="p-2 text-gray-700">{font.name}</td>
                       <td
                         className="p-2 text-gray-600"
-                        style={{ fontFamily: font.name }}
+                        style={{
+                          fontFamily: font.name,
+                        }}
                       >
                         Example Style
                       </td>
