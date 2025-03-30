@@ -1,5 +1,6 @@
 import Confirmation from "@/components/Confirmation";
 import Container from "@/components/Container";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -35,6 +36,7 @@ interface FontGroup {
 
 export default function GroupPage() {
   const [fontGroups, setFontGroups] = useState<FontGroup[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ export default function GroupPage() {
     };
 
     fetchGroups();
+    setIsLoading(false);
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -74,100 +77,105 @@ export default function GroupPage() {
   };
 
   return (
-    <Container>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Card className="shadow-sm rounded">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-xl text-gray-800">
-              Our Font Groups
-            </CardTitle>
-            <CardDescription>
-              List of all available font groups.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[200px] font-medium text-gray-700">
-                    NAME
-                  </TableHead>
-                  <TableHead className="font-medium text-gray-700">
-                    FONTS
-                  </TableHead>
-                  <TableHead className="w-[100px] font-medium text-gray-700">
-                    COUNT
-                  </TableHead>
-                  <TableHead className="w-[150px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <AnimatePresence>
-                  {fontGroups.map((group, index) => (
-                    <motion.tr
-                      key={group._id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, height: 0, overflow: "hidden" }}
-                      transition={{
-                        duration: 0.3,
-                        delay: index * 0.05,
-                        exit: { duration: 0.2 },
-                      }}
-                      layout
-                      className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                    >
-                      <TableCell className="font-medium text-gray-700">
-                        {group.groupTitle}
-                      </TableCell>
-                      <TableCell className="text-gray-600">
-                        {group.fonts.map((f) => (
-                          <span key={f.fontName}>{f.fontName}, </span>
-                        ))}
-                      </TableCell>
-                      <TableCell className="text-gray-600">
-                        {group.fonts.length}
-                      </TableCell>
-                      <TableCell className="flex justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          onClick={() => handleEdit(group._id)}
-                          className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-0 h-auto"
-                        >
-                          <motion.span
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            Edit
-                          </motion.span>
-                        </Button>
-
-                        <Confirmation onConfirm={() => handleDelete(group._id)}>
+    <>
+      {isLoading && <Loading />}
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="shadow-sm rounded">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-xl text-gray-800">
+                Our Font Groups
+              </CardTitle>
+              <CardDescription>
+                List of all available font groups.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[200px] font-medium text-gray-700">
+                      NAME
+                    </TableHead>
+                    <TableHead className="font-medium text-gray-700">
+                      FONTS
+                    </TableHead>
+                    <TableHead className="w-[100px] font-medium text-gray-700">
+                      COUNT
+                    </TableHead>
+                    <TableHead className="w-[150px]"></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <AnimatePresence>
+                    {fontGroups.map((group, index) => (
+                      <motion.tr
+                        key={group._id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+                        transition={{
+                          duration: 0.3,
+                          delay: index * 0.05,
+                          exit: { duration: 0.2 },
+                        }}
+                        layout
+                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                      >
+                        <TableCell className="font-medium text-gray-700">
+                          {group.groupTitle}
+                        </TableCell>
+                        <TableCell className="text-gray-600">
+                          {group.fonts.map((f) => (
+                            <span key={f.fontName}>{f.fontName}, </span>
+                          ))}
+                        </TableCell>
+                        <TableCell className="text-gray-600">
+                          {group.fonts.length}
+                        </TableCell>
+                        <TableCell className="flex justify-end gap-2">
                           <Button
                             variant="ghost"
-                            className="text-red-500 hover:text-red-700 hover:bg-red-50 p-0 h-auto"
+                            onClick={() => handleEdit(group._id)}
+                            className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-0 h-auto"
                           >
                             <motion.span
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
-                              Delete
+                              Edit
                             </motion.span>
                           </Button>
-                        </Confirmation>
-                      </TableCell>
-                    </motion.tr>
-                  ))}
-                </AnimatePresence>
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </Container>
+
+                          <Confirmation
+                            onConfirm={() => handleDelete(group._id)}
+                          >
+                            <Button
+                              variant="ghost"
+                              className="text-red-500 hover:text-red-700 hover:bg-red-50 p-0 h-auto"
+                            >
+                              <motion.span
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                Delete
+                              </motion.span>
+                            </Button>
+                          </Confirmation>
+                        </TableCell>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </Container>
+    </>
   );
 }

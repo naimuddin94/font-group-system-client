@@ -1,5 +1,6 @@
 import Confirmation from "@/components/Confirmation";
 import Container from "@/components/Container";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { baseUrl } from "@/constant";
@@ -34,6 +35,7 @@ const loadFont = (fontName: string, fontFile: string, fontStyle: string) => {
 
 export default function FontPage() {
   const [fonts, setFonts] = useState<IFonts[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFonts = async () => {
@@ -45,6 +47,7 @@ export default function FontPage() {
     };
 
     fetchFonts();
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -71,68 +74,71 @@ export default function FontPage() {
   };
 
   return (
-    <Container>
-      <Card className="p-4 rounded">
-        <CardContent>
-          <h2 className="text-xl font-semibold text-gray-700">Our Fonts</h2>
-          <p className="text-sm text-gray-500">
-            Browse a list of Zepto fonts to build your font group.
-          </p>
+    <>
+      {isLoading && <Loading />}
+      <Container>
+        <Card className="p-4 rounded">
+          <CardContent>
+            <h2 className="text-xl font-semibold text-gray-700">Our Fonts</h2>
+            <p className="text-sm text-gray-500">
+              Browse a list of Zepto fonts to build your font group.
+            </p>
 
-          <motion.div
-            className="overflow-hidden rounded-lg mt-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left p-2 font-medium text-gray-700">
-                    Font Name
-                  </th>
-                  <th className="text-left p-2 font-medium text-gray-700">
-                    Preview
-                  </th>
-                  <th className="p-2"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {fonts.map((font, index) => (
-                  <motion.tr
-                    key={font.name}
-                    className="border-b"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <td className="p-2 text-gray-700">{font.name}</td>
-                    <td
-                      className="p-2 text-gray-600"
-                      style={{ fontFamily: font.name }}
+            <motion.div
+              className="overflow-hidden rounded-lg mt-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left p-2 font-medium text-gray-700">
+                      Font Name
+                    </th>
+                    <th className="text-left p-2 font-medium text-gray-700">
+                      Preview
+                    </th>
+                    <th className="p-2"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {fonts.map((font, index) => (
+                    <motion.tr
+                      key={font.name}
+                      className="border-b"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
                     >
-                      Example Style
-                    </td>
-                    <td className="p-2 text-right">
-                      <Confirmation
-                        onConfirm={() => handleDeleteFont(font._id)}
+                      <td className="p-2 text-gray-700">{font.name}</td>
+                      <td
+                        className="p-2 text-gray-600"
+                        style={{ fontFamily: font.name }}
                       >
-                        <Button
-                          variant="ghost"
-                          className="text-red-500 hover:text-red-600"
+                        Example Style
+                      </td>
+                      <td className="p-2 text-right">
+                        <Confirmation
+                          onConfirm={() => handleDeleteFont(font._id)}
                         >
-                          Delete
-                        </Button>
-                      </Confirmation>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
-        </CardContent>
-      </Card>
-    </Container>
+                          <Button
+                            variant="ghost"
+                            className="text-red-500 hover:text-red-600"
+                          >
+                            Delete
+                          </Button>
+                        </Confirmation>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+          </CardContent>
+        </Card>
+      </Container>
+    </>
   );
 }
