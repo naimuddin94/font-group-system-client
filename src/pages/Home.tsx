@@ -105,7 +105,7 @@ export default function Home() {
             type="file"
             ref={fileInputRef}
             className="hidden"
-            accept=".ttf"
+            accept=".ttf,.ttc"
             onChange={handleFileChange}
           />
 
