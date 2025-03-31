@@ -95,83 +95,93 @@ export default function GroupPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[200px] font-medium text-gray-700">
-                      NAME
-                    </TableHead>
-                    <TableHead className="font-medium text-gray-700">
-                      FONTS
-                    </TableHead>
-                    <TableHead className="w-[100px] font-medium text-gray-700">
-                      COUNT
-                    </TableHead>
-                    <TableHead className="w-[150px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <AnimatePresence>
-                    {fontGroups.map((group, index) => (
-                      <motion.tr
-                        key={group._id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, height: 0, overflow: "hidden" }}
-                        transition={{
-                          duration: 0.3,
-                          delay: index * 0.05,
-                          exit: { duration: 0.2 },
-                        }}
-                        layout
-                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                      >
-                        <TableCell className="font-medium text-gray-700">
-                          {group.groupTitle}
-                        </TableCell>
-                        <TableCell className="text-gray-600">
-                          {group.fonts.map((f) => (
-                            <span key={f.fontName}>{f.fontName}, </span>
-                          ))}
-                        </TableCell>
-                        <TableCell className="text-gray-600">
-                          {group.fonts.length}
-                        </TableCell>
-                        <TableCell className="flex justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            onClick={() => handleEdit(group._id)}
-                            className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-0 h-auto"
-                          >
-                            <motion.span
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              Edit
-                            </motion.span>
-                          </Button>
-
-                          <Confirmation
-                            onConfirm={() => handleDelete(group._id)}
-                          >
+              {fontGroups.length > 0 ? (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[200px] font-medium text-gray-700">
+                        NAME
+                      </TableHead>
+                      <TableHead className="font-medium text-gray-700">
+                        FONTS
+                      </TableHead>
+                      <TableHead className="w-[100px] font-medium text-gray-700">
+                        COUNT
+                      </TableHead>
+                      <TableHead className="w-[150px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <AnimatePresence>
+                      {fontGroups.map((group, index) => (
+                        <motion.tr
+                          key={group._id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+                          transition={{
+                            duration: 0.3,
+                            delay: index * 0.05,
+                            exit: { duration: 0.2 },
+                          }}
+                          layout
+                          className={
+                            index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                          }
+                        >
+                          <TableCell className="font-medium text-gray-700">
+                            {group.groupTitle}
+                          </TableCell>
+                          <TableCell className="text-gray-600">
+                            {group.fonts.map((f) => (
+                              <span key={f.fontName}>{f.fontName}, </span>
+                            ))}
+                          </TableCell>
+                          <TableCell className="text-gray-600">
+                            {group.fonts.length}
+                          </TableCell>
+                          <TableCell className="flex justify-end gap-2">
                             <Button
                               variant="ghost"
-                              className="text-red-500 hover:text-red-700 hover:bg-red-50 p-0 h-auto"
+                              onClick={() => handleEdit(group._id)}
+                              className="text-blue-500 hover:text-blue-700 hover:bg-blue-50 p-0 h-auto"
                             >
                               <motion.span
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                               >
-                                Delete
+                                Edit
                               </motion.span>
                             </Button>
-                          </Confirmation>
-                        </TableCell>
-                      </motion.tr>
-                    ))}
-                  </AnimatePresence>
-                </TableBody>
-              </Table>
+
+                            <Confirmation
+                              onConfirm={() => handleDelete(group._id)}
+                            >
+                              <Button
+                                variant="ghost"
+                                className="text-red-500 hover:text-red-700 hover:bg-red-50 p-0 h-auto"
+                              >
+                                <motion.span
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  Delete
+                                </motion.span>
+                              </Button>
+                            </Confirmation>
+                          </TableCell>
+                        </motion.tr>
+                      ))}
+                    </AnimatePresence>
+                  </TableBody>
+                </Table>
+              ) : (
+                <div>
+                  <h2 className="text-center text-slate-500 py-5 text-lg">
+                    No available group found
+                  </h2>
+                </div>
+              )}
             </CardContent>
           </Card>
         </motion.div>

@@ -101,53 +101,61 @@ export default function FontPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left p-2 font-medium text-gray-700">
-                      Font Name
-                    </th>
-                    <th className="text-left p-2 font-medium text-gray-700">
-                      Preview
-                    </th>
-                    <th className="p-2"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {fonts.map((font, index) => (
-                    <motion.tr
-                      key={font.name}
-                      className="border-b"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <td className="p-2 text-gray-700">{font.name}</td>
-                      <td
-                        className="p-2 text-gray-600"
-                        style={{
-                          fontFamily: font.name,
-                        }}
+              {fonts.length > 0 ? (
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-2 font-medium text-gray-700">
+                        Font Name
+                      </th>
+                      <th className="text-left p-2 font-medium text-gray-700">
+                        Preview
+                      </th>
+                      <th className="p-2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {fonts.map((font, index) => (
+                      <motion.tr
+                        key={font.name}
+                        className="border-b"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        whileHover={{ scale: 1.02 }}
                       >
-                        Example Style
-                      </td>
-                      <td className="p-2 text-right">
-                        <Confirmation
-                          onConfirm={() => handleDeleteFont(font._id)}
+                        <td className="p-2 text-gray-700">{font.name}</td>
+                        <td
+                          className="p-2 text-gray-600"
+                          style={{
+                            fontFamily: font.name,
+                          }}
                         >
-                          <Button
-                            variant="ghost"
-                            className="text-red-500 hover:text-red-600"
+                          Example Style
+                        </td>
+                        <td className="p-2 text-right">
+                          <Confirmation
+                            onConfirm={() => handleDeleteFont(font._id)}
                           >
-                            Delete
-                          </Button>
-                        </Confirmation>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
+                            <Button
+                              variant="ghost"
+                              className="text-red-500 hover:text-red-600"
+                            >
+                              Delete
+                            </Button>
+                          </Confirmation>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div>
+                  <h2 className="text-center text-slate-500 py-8 text-lg">
+                    No available font found
+                  </h2>
+                </div>
+              )}
             </motion.div>
           </CardContent>
         </Card>
